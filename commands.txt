@@ -1,0 +1,30 @@
+# Start zookeeper server
+bin/zookeeper-server-start.sh config/zookeeper.properties &
+ 
+# Start Kafka broker server
+bin/kafka-server-start.sh config/server.properties &
+
+# List all running java processes
+jps -lm
+  
+user7:~/environment/kafka_2.12-3.8.0 $ jps -lm
+2547 org.apache.zookeeper.server.quorum.QuorumPeerMain config/zookeeper.properties
+4246 jdk.jcmd/sun.tools.jps.Jps -lm
+3630 kafka.Kafka config/server.properties
+ 
+# Create topic on the running broker
+bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+
+# List topics on the broker
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+# Describe the topic
+bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
+
+# Start producer
+bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+
+# Start consumer and consume
+bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+
+sudo apt install kafkacat
