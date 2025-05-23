@@ -1,29 +1,37 @@
-KAFKA 101:
+# KAFKA 101:
 
 https://kiddcorp.signin.aws.amazon.com/console
 User7
-THEHART1234!
+T****4!
 
 
-# Start zookeeper server
-bin/zookeeper-server-start.sh config/zookeeper.properties &
+## Start zookeeper server
+```bin/zookeeper-server-start.sh config/zookeeper.properties &```
  
-# Start Kafka broker server
-bin/kafka-server-start.sh config/server.properties &
+## Start Kafka broker server
+```bin/kafka-server-start.sh config/server.properties &```
 
-# List all running java processes
-jps -lm
+## List all running java processes
+```jps -lm```
   
-user4:~/environment/kafka_2.12-3.8.0 $ jps -lm
+* user4:~/environment/kafka_2.12-3.8.0 $ jps -lm
+
+
+`
 2547 org.apache.zookeeper.server.quorum.QuorumPeerMain config/zookeeper.properties
+
+
 4246 jdk.jcmd/sun.tools.jps.Jps -lm
+
+
 3630 kafka.Kafka config/server.properties
- 
-# Create topic on the running broker
+` 
+
+## Create topic on the running broker
 bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
 
-# List topics on the broker
-bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+## List topics on the broker
+```bin/kafka-topics.sh --list --bootstrap-server localhost:9092```
 
 # Describe the topic
 bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
@@ -75,3 +83,7 @@ mvn exec:java -Dexec.mainClass="com.kiddcorp.ProducerDemoWithCallback"
 # Running a Java consumer java class
 mvn exec:java -Dexec.mainClass="com.kiddcorp.ConsumerDemo"
 
+## Streaming
+bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic plaintext-input
+mvn exec:java -Dexec.mainClass="com.kiddcorp.Pipe"
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic wordcount-output --property print.key=true --property key.separator=" : " --key-deserializer "org.apache.kafka.common.serialization.StringDeserializer" --value-deserializer "org.apache.kafka.common.serialization.LongDeserializer"
