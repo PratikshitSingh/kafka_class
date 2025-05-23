@@ -28,62 +28,62 @@ T****4!
 ` 
 
 ## Create topic on the running broker
-bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+```bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092```
 
 ## List topics on the broker
 ```bin/kafka-topics.sh --list --bootstrap-server localhost:9092```
 
-# Describe the topic
-bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
+## Describe the topic
+```bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092```
 
-# Start producer
-bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+## Start producer
+```bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092```
 
-# Start consumer and consume
-bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+## Start consumer and consume
+```bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092```
 
-# Kafkacat
-sudo apt install kafkacat
+## Kafkacat
+```sudo apt install kafkacat```
 
-# See Kafka-cluster info
-kafkacat -b localhost:9091 -L
+## See Kafka-cluster info
+```kafkacat -b localhost:9091 -L```
 
-# State a consumer in a consumer group
-kafkacat -b localhost:9092 -C -G cg1 t1
+## State a consumer in a consumer group
+```kafkacat -b localhost:9092 -C -G cg1 t1```
 
-# Describe all consumers in a CG
-bin/kafka-consumer-groups.sh --bootstrap-server localhost:9091 --group cg1 --describe --members
+## Describe all consumers in a CG
+```bin/kafka-consumer-groups.sh --bootstrap-server localhost:9091 --group cg1 --describe --members```
 
-# To find offset
-bin/kafka-consumer-groups.sh --bootstrap-server localhost:9091 --group cg1 --describe
+## To find offset
+```bin/kafka-consumer-groups.sh --bootstrap-server localhost:9091 --group cg1 --describe```
 
 ![image](https://github.com/user-attachments/assets/ae91ab13-60d9-47c2-9445-09ff11641887)
 
 
-## File Source and Sink - Connector
+# File Source and Sink - Connector
 
 
-# Connect test - To work with connectors
-bin/kafka-topics.sh --create --bootstrap-server :9092 --topic connect-test
+## Connect test - To work with connectors
+```bin/kafka-topics.sh --create --bootstrap-server :9092 --topic connect-test```
 
-# Add following to connect-standalone.properties
-plugin.path=/home/ubuntu/environment/kafka_2.12-3.8.0/libs/connect-file-3.8.0.jar
+## Add following to connect-standalone.properties
+```plugin.path=/home/ubuntu/environment/kafka_2.12-3.8.0/libs/connect-file-3.8.0.jar```
 
-echo -e "foo\nbar" > test.txt
-kafkacat -b localhost:9092 -C -G ct1 connect-test
-bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties
+```echo -e "foo\nbar" > test.txt```
+```kafkacat -b localhost:9092 -C -G ct1 connect-test```
+```bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties```
 ￼
 
 
 
 
-# Running with Java class
-mvn exec:java -Dexec.mainClass="com.kiddcorp.ProducerDemoWithCallback"
+## Running with Java class
+```mvn exec:java -Dexec.mainClass="com.kiddcorp.ProducerDemoWithCallback"```
 
-# Running a Java consumer java class
-mvn exec:java -Dexec.mainClass="com.kiddcorp.ConsumerDemo"
+## Running a Java consumer java class
+```mvn exec:java -Dexec.mainClass="com.kiddcorp.ConsumerDemo"```
 
 ## Streaming
-bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic plaintext-input
-mvn exec:java -Dexec.mainClass="com.kiddcorp.Pipe"
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic wordcount-output --property print.key=true --property key.separator=" : " --key-deserializer "org.apache.kafka.common.serialization.StringDeserializer" --value-deserializer "org.apache.kafka.common.serialization.LongDeserializer"
+```bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic plaintext-input```
+```mvn exec:java -Dexec.mainClass="com.kiddcorp.Pipe"```
+```bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic wordcount-output --property print.key=true --property key.separator=" : " --key-deserializer "org.apache.kafka.common.serialization.StringDeserializer" --value-deserializer "org.apache.kafka.common.serialization.LongDeserializer"```
